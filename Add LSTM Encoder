@@ -1,0 +1,28 @@
+import tensorflow as tf
+from tensorflow.keras import layers, Model
+
+# Define the LSTM Encoder model
+class LSTMEncoder(Model):
+    def __init__(self, input_size, hidden_size):
+        super(LSTMEncoder, self).__init__()
+        self.lstm = layers.LSTM(hidden_size, activation='sigmoid', return_state=True)
+
+    def call(self, x):
+        # Forward pass through LSTM; only keep the final hidden state (h) as the latent representation
+        _, h, _ = self.lstm(x)
+        z = h  # Latent representation
+        return z
+
+# Parameters
+T = 140 # Number of time steps per sample
+hidden_size = 10  # Size of the hidden layer (latent representation)
+batch_size = 20 # Number of samples in each batch
+num_features = 1 # Number of features per time step (single acquisition per action)
+
+# Instantiate the model
+encoder = LSTMEncoder(input_size=num_features,hidden_size=hidden_size)
+
+X_normalized = tf.expand_dims(X_normalized, -1)  # Shape becomes (321, 140, 1)
+# Get latent representation
+z = encoder(X_normalized)
+print("Latent representation z shape:", z.shape)  # Expected shape: (321, hidden_size)
