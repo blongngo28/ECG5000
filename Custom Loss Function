@@ -1,0 +1,34 @@
+# Fixed sparsity coefficient
+eta = 0.01  # Theo bài báo TSMAE
+
+def custom_loss(y_true, y_pred):
+    """
+    Custom loss function combining reconstruction loss and sparsity loss.
+
+    Args:
+        y_true: The original input data (ground truth).
+        y_pred: A tuple containing the reconstructed data (x_hat) and q_normalized.
+
+    Returns:
+        The total loss: reconstruction loss + eta * sparsity loss
+    """
+
+    # Truy cập các giá trị từ list
+    x_hat = y_pred[0]
+
+
+
+
+    # Reconstruction Loss (Mean Squared Error)
+    reconstruction_loss = tf.reduce_mean(tf.square(y_true - x_hat)) / 2.0
+
+
+
+    # Sparsity Loss (log sparsity penalty)
+    q_normalized = q_rectified / tf.maximum(q_l1_norm, epsilon)
+    sparsity_loss = tf.reduce_sum(-tf.math.log(1 + tf.square(q_normalized)))
+
+    # Tổng loss
+    total_loss = reconstruction_loss + eta * sparsity_loss
+
+    return total_loss
