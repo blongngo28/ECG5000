@@ -1,0 +1,26 @@
+import tensorflow as tf
+
+# Parameters
+E = 10  # Dimension of latent representation
+N = 20  # Number of memory items
+lambda_threshold = 1 / N  # Sparsification threshold, lambda >= 1/N
+epsilon = 1e-10  # Small value to avoid division by zero in normalization
+
+# Step 1: Initialize M with Xavier initialization
+initializer = tf.keras.initializers.GlorotUniform()
+M = tf.Variable(initializer(shape=(N, E)), trainable=True, dtype=tf.float32)
+
+
+# Step 3: Calculate addressing vector q
+similarity_scores = tf.matmul(z, M, transpose_b=True)  # Inner product with each memory item
+q = tf.nn.softmax(similarity_scores, axis=1)  # Apply softmax to get initial addressing vector
+
+# Step 4: Rectify q based on the lambda_threshold
+q_rectified = (tf.maximum(q - lambda_threshold, 0) * q) / abs(q - lambda_threshold)
+
+# Step 5: Normalize using L1 normalization with epsilon to stabilize
+q_l1_norm = tf.reduce_sum(tf.abs(q_rectified), axis=1, keepdims=True)
+q_normalized = q_rectified / tf.maximum(q_l1_norm, epsilon)
+
+# Final addressing vector
+print("Final addressing vector shape:", q_normalized.shape)
