@@ -1,0 +1,42 @@
+import tensorflow as tf
+from tensorflow.keras import layers, Sequential
+
+# Define the LSTM Decoder model
+class LSTMDecoder(tf.keras.Model):
+    def __init__(self, sequence_length, latent_dim, dropout_rate=0.2):
+        super(LSTMDecoder, self).__init__()
+        self.sequence_length = sequence_length
+        self.latent_dim = latent_dim
+        self.dropout_rate = dropout_rate
+
+        # Define the layers in the LSTM decoder
+        self.lstm_decoder = Sequential([
+            layers.RepeatVector(sequence_length),                   # Repeat z_hat for each time step
+            layers.LSTM(sequence_length, return_sequences=True),    # First LSTM layer
+            layers.Dropout(dropout_rate),                           # Dropout layer
+            layers.LSTM(sequence_length, return_sequences=True),    # Second LSTM layer
+            layers.Dropout(dropout_rate),                           # Dropout layer
+            layers.TimeDistributed(layers.Dense(1))                # Output layer for each time step
+        ])
+
+    def call(self, z_hat):
+        # Pass the latent representation through the LSTM decoder layers
+        x_hat = self.lstm_decoder(z_hat)
+        # Reshape the output to match the shape of X_normalized
+        # The -1 ensures batch size is handled automatically
+        # sequence_length and 1 provide the correct dimensions
+        #x_hat = tf.reshape(x_hat, [-1, sequence_length, 1])
+
+        return x_hat # Remove tf.squeeze to preserve all dimensions
+
+
+# Instantiate the LSTM decoder
+sequence_length = 140  # Length of the original sequence
+latent_dim = 10        # Dimensionality of the latent representation z_hat
+decoder = LSTMDecoder(sequence_length=sequence_length, latent_dim=latent_dim, dropout_rate=0.2)
+
+# Example input to the decoder
+
+x_hat = decoder(z_hat)  # Get the reconstructed sequence
+
+print("Reconstructed sample (x_hat) shape:", x_hat.shape)
