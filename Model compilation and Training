@@ -1,0 +1,19 @@
+# Khởi tạo model, providing the necessary arguments
+input_size = 1  # Number of features (from your previous code)
+hidden_size = 10 # Size of the hidden layer (from your previous code)
+sequence_length = 140 # Length of the sequence (from your previous code)
+latent_dim = 10 # Dimension of the latent representation (from your previous code)
+
+model = TSMAE(input_size=input_size,
+              hidden_size=hidden_size,
+              sequence_length=sequence_length,
+              latent_dim=latent_dim)
+
+# Compile model
+# Pass your custom loss function 'custom_loss' to the 'loss' argument
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+              loss=custom_loss,  # Use your custom loss function
+              metrics=['mse'])  # Sử dụng metric phù hợp
+
+# Huấn luyện model
+model.fit(X_normalized, X_normalized, epochs=50, batch_size=20)
