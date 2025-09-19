@@ -14,7 +14,7 @@ Bachelor Project :
  - Step 1 : Understand some basic mathematical concepts and knowledges in AI and then try to code some basic math in Python
  - Step 2 : Learn some machine learning models and available library which are useful for anomaly detection mission
  - Step 3 : Read the paper and investigate what this paper contributes to our AI society
- - Step 4 : Try to code it by yourself before read the code files in here.
+ - Step 4 : Try to code it by yourself before read the code files in here
 
 4. Datasets : The datasets taken from paper taken from this link here : https://www.kaggle.com/datasets/salsabilahmid/ecg50000/code
 
@@ -24,7 +24,7 @@ Bachelor Project :
    -  Wafer dataset : originates from semiconductor manufacturing processes and contain sensor measurements recorded during
    the production of silicon wafer
    - Arrhythmya dataset : is designed to analyze ECG readings for identifying and classifying cardiac arrhythmias. The dataset
-     includes two main groups : Class 01, representing normal ECG data and class 02 throug 16 , which encompass various types of arrhythmia and unknowncases.
+     includes two main groups : Class 01, representing normal ECG data and class 02 throug 16 , which encompass various types of arrhythmia and unknowncases
 
 6. Related papers :
    [1] H. Gao, B. Qiu, R. J. D. Barroso, W. Hussain, Y. Xu and X. Wang, "TSMAE: A Novel Anomaly Detection Approach for Internet of Things Time Series Data Using Memory-Augmented Autoencoder," in IEEE Transactions on Network Science and Engineering, vol. 10, no. 5, pp. 2978-2990, 1 Sept.-Oct. 2023, doi: 10.1109/TNSE.2022.3163144.
