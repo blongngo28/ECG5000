@@ -1,0 +1,4 @@
+
+anomaly_ratio = 8.75 / 100
+threshold = np.percentile(reconstruction_error, 100 - anomaly_ratio * 100)
+print(f"Threshold based on anomaly ratio: {threshold}")
