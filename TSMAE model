@@ -1,0 +1,31 @@
+class TSMAE(Model):
+    def __init__(self, input_size, hidden_size, sequence_length, latent_dim, dropout_rate=0.2, N=20, E=10, lambda_threshold=0.05, epsilon=1e-10):
+        super(TSMAE, self).__init__()
+        self.encoder = LSTMEncoder(input_size, hidden_size)
+        self.decoder = LSTMDecoder(sequence_length, latent_dim, dropout_rate)
+
+        # Memory module parameters
+        self.N = N  # Number of memory items
+        self.E = E  # Dimension of latent representation
+        self.lambda_threshold = lambda_threshold  # Sparsification threshold
+        self.epsilon = epsilon  # Small value to avoid division by zero
+
+        # Initialize M with Xavier initialization
+        initializer = tf.keras.initializers.GlorotUniform()
+        self.M = tf.Variable(initializer(shape=(self.N, self.E)), trainable=True, dtype=tf.float32)
+
+    def call(self, inputs):
+        # Encoder
+        z = self.encoder(inputs)
+
+        # Memory Module
+        similarity_scores = tf.matmul(z, self.M, transpose_b=True)
+        q = tf.nn.softmax(similarity_scores, axis=1)
+        q_rectified = (tf.maximum(q - self.lambda_threshold, 0) * q) / abs(q - self.lambda_threshold)
+        q_l1_norm = tf.reduce_sum(tf.abs(q_rectified), axis=1, keepdims=True)
+        q_normalized = q_rectified / tf.maximum(q_l1_norm, self.epsilon)
+
+        # Decoder
+        x_hat = self.decoder(tf.matmul(q_normalized, self.M))
+
+        return x_hat  # Trả về list
