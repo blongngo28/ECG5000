@@ -1,4 +1,4 @@
-# ECG5000
+# TSMAE
 Bachelor Project : 
 1. What this project does ?
 
