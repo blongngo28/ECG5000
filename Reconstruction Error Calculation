@@ -1,0 +1,8 @@
+# Dự đoán trên dữ liệu huấn luyện
+X_reconstructed = model.predict(X_normalized)
+
+# Tính toán lỗi tái tạo
+reconstruction_error = np.mean(np.square(X_normalized - X_reconstructed), axis=1)
+
+# In ra lỗi tái tạo trung bình
+print("Average Reconstruction Error:", np.mean(reconstruction_error))
