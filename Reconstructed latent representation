@@ -1,0 +1,7 @@
+# Assuming q_normalized is the final addressing vector obtained from the previous steps
+# and M is the memory matrix
+
+# Calculate the reconstructed latent representation z_hat
+z_hat = tf.matmul(q_normalized, M)
+
+print("Reconstructed latent representation (z_hat) shape:", z_hat.shape)
