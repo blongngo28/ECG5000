@@ -1,0 +1,13 @@
+from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix
+
+y_pred = (reconstruction_error > threshold).astype(int)  # 1: anomaly, 0: normal
+y_true = (labels_selected != 0).astype(int)  # 1: anomaly, 0: normal (giả sử nhãn của bạn)
+
+precision = precision_score(y_true, y_pred)
+recall = recall_score(y_true, y_pred)
+f1 = f1_score(y_true, y_pred)
+auc = roc_auc_score(y_true, reconstruction_error)
+
+print(f"Precision: {precision:.2f}, Recall: {recall:.2f}, F1 Score: {f1:.2f}, AUC: {auc:.4f}")
+print("Confusion Matrix:")
+print(confusion_matrix(y_true, y_pred))
