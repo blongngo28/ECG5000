@@ -24,7 +24,7 @@ Bachelor Project :
    -  Wafer dataset : originates from semiconductor manufacturing processes and contain sensor measurements recorded during
    the production of silicon wafer
    - Arrhythmya dataset : is designed to analyze ECG readings for identifying and classifying cardiac arrhythmias. The dataset
-     includes two main groups : Class 01, representing normal ECG data and class 02 throug 16 , which encompass various types of arrhythmia and unknowncases
+     includes two main groups : Class 01, representing normal ECG data and class 02 throug 16 , which encompass various types of arrhythmia and unknown cases
 
 6. Related papers :
    [1] H. Gao, B. Qiu, R. J. D. Barroso, W. Hussain, Y. Xu and X. Wang, "TSMAE: A Novel Anomaly Detection Approach for Internet of Things Time Series Data Using Memory-Augmented Autoencoder," in IEEE Transactions on Network Science and Engineering, vol. 10, no. 5, pp. 2978-2990, 1 Sept.-Oct. 2023, doi: 10.1109/TNSE.2022.3163144.
